@@ -5,7 +5,7 @@ const path = require('path');
 const Sequelize = require('sequelize');
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
-const config = require(__dirname + '/../config/config.json')[env];
+const config = require('../config/config')[env];
 const db = {};
 
 let sequelize;
@@ -35,3 +35,23 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 module.exports = db;
+
+
+// const typeorm = require("typeorm");
+// const env = process.env.NODE_ENV || 'development';
+// const config = require('../config/config')[env];
+// const getConnection = typeorm.createConnections({
+//   type: config.dialect,
+//   host: config.host,
+//   port: 3306,
+//   username: config.username,
+//   password: config.password,
+//   database: config.database,
+//   synchronize: true,
+//   entities: [
+//     require('../src/models/User')
+//   ]
+// });
+// module.exports = {
+//   getConnection
+// }

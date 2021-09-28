@@ -1,25 +1,35 @@
-const dbConfig = require("../config/config.js");
+require('dotenv').config();
+const fs = require('fs');
+const path = require('path');
+const Sequelize = require('sequelize');
+const basename = path.basename(__filename);
+const env = process.env.NODE_ENV || 'development';
+const config = require('../../config/config')[env];
 
-const Sequelize = require("sequelize");
-const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
-  host: dbConfig.HOST,
-  dialect: dbConfig.dialect,
-  operatorsAliases: false,
-
-  pool: {
-    max: dbConfig.pool.max,
-    min: dbConfig.pool.min,
-    acquire: dbConfig.pool.acquire,
-    idle: dbConfig.pool.idle
-  }
+const sequelize = new Sequelize(config.database, config.username, config.password, {
+  host: config.host,
+  dialect: config.dialect,
 });
 
 const db = {};
 
-db.Sequelize = Sequelize;
-db.sequelize = sequelize;
+/**Add the Database Models**/
 
-import User from './rest/User'
-db.users = User(sequelize, Sequelize);
+fs
+    .readdirSync(__dirname)
+    .filter((file) => (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js'))
+    .forEach((file) => {
+        const model = sequelize.import(path.join(__dirname, file));
+        db[model.name] = model;
+    });
+
+Object.keys(db).forEach((modelName) => {
+    if (db[modelName].associate) {
+        db[modelName].associate(db);
+    }
+});
+
+db.sequelize = sequelize;
+db.Sequelize = Sequelize;
 
 module.exports = db;

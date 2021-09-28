@@ -1,4 +1,4 @@
-const usersApiRouter = require('../users/index')
+const usersApiRouter = require('./userRoutes')
 
 const routerManager = (app) => {
     usersApiRouter(app);

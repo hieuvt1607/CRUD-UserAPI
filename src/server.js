@@ -4,6 +4,7 @@ import morgan from 'morgan';
 import helmet from 'helmet';
 import fs from 'fs';
 import path from 'path';
+require('./models');
 
 const app = express();
 

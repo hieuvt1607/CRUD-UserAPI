@@ -1,10 +1,10 @@
 // import { v4 as uuidv4 } from 'uuid';
 // import { logger } from './logger';
-import { ErrorCodes } from './constants';
+// import { ErrorCodes } from './constants';
 
-export function respondSuccess(data, message = 'Success') {
+export function respondSuccess(errorCode, data, message = 'Success') {
     return {
-        code: ErrorCodes.ERROR_CODE_SUCCESS,
+        code: errorCode,
         message,
         data,
     };
